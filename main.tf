@@ -1,12 +1,4 @@
-
-locals {
-    bucket_name = "tf-intro-site-bucket-agolubkov"
-}
-
-
-
 //------------Create BuildVM---------------------//
-
 resource "yandex_compute_instance" "build-vm" {
   name = "build-vm"
   allow_stopping_for_update = true
@@ -26,35 +18,7 @@ resource "yandex_compute_instance" "build-vm" {
     nat = true # автоматически установить динамический ip
   }
   metadata = {
-    user-data = "${file("./meta.txt")}"
-  }
-#-------Connect to Vm build---------#
-connection {
-    type     = "ssh"
-    user     = "jenkins"
-    private_key = file("~/.ssh/id_rsa")
-    host = yandex_compute_instance.build-vm.network_interface.0.nat_ip_address
-  }
-#-------/Build & push docker image---------#
-
-  provisioner "file" {
-    source      = "dockerfile"
-    destination = "/tmp/dockerfile"
-  }
-  
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update", 
-      "sudo apt install docker.io -y",
-      "mkdir ~/tomcat_box",
-      "cp /tmp/dockerfile ~/tomcat_box/",
-      "cd ~/tomcat_box/",
-      "sudo docker build -t tomcat_box .",
-      "sudo docker tag tomcat_box agolubkov/tomcat_box",
-      "sudo docker tag tomcat_box cr.yandex/${yandex_container_registry.agolubkovreg.id}/tomcat_box",
-      "sudo docker push cr.yandex/${yandex_container_registry.agolubkovreg.id}/tomcat_box"
-
-    ]
+    user-data = "${file("/var/lib/jenkins/workspace/YandexCloudDockerTomcatBoxfuse/meta.txt")}"
   }
 }
 
@@ -78,23 +42,6 @@ resource "yandex_compute_instance" "prod-vm" {
     nat = true # автоматически установить динамический ip
   }
   metadata = {
-    user-data = "${file("./meta.txt")}"
+    user-data = "${file("/var/lib/jenkins/workspace/YandexCloudDockerTomcatBoxfuse/meta.txt")}"
   }
-#-------Connect to Vm prod---------#
-  connection {
-      type     = "ssh"
-      user     = "jenkins"
-      private_key = file("~/.ssh/id_rsa")
-      host = yandex_compute_instance.prod-vm.network_interface.0.nat_ip_address
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update", 
-      "sudo apt install docker.io -y",
-      "sudo docker pull cr.yandex/${yandex_container_registry.agolubkovreg.id}/tomcat_box",
-      "sudo docker run -d -p 8080:8080 cr.yandex/${yandex_container_registry.agolubkovreg.id}/tomcat_box"
-    ]
-  }
-
-
 }
