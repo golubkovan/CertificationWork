@@ -14,16 +14,17 @@ pipeline {
     }
 
 
-  stage('Filling in the file host for ansible'){
-    steps {
+    stage('Filling in the file host for ansible'){
+        steps {
             sh """
             echo '[build]' > /etc/ansible/hosts
             terraform output -raw nat_ip_vm_build >> /etc/ansible/hosts
             echo '\n[prod]' >> /etc/ansible/hosts
             terraform output -raw  nat_ip__vm_prod >> /etc/ansible/hosts
             echo '\n' >> /etc/ansible/hosts
-        """
-    }
-  }  
+            """
+        }
+    }  
 
+  }
 }
