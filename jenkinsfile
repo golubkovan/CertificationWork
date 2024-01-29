@@ -12,7 +12,7 @@ pipeline {
             sh 'terraform apply --auto-approve'
             }
     }
-  }
+
 
   stage('Filling in the file host for ansible'){
     steps {
