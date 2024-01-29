@@ -19,10 +19,10 @@ pipeline {
             sh """
             echo '[build]' > /etc/ansible/hosts
             terraform output -raw nat_ip_vm_build >> /etc/ansible/hosts
-            echo ' ansible_user=root ansible_ssh_private_key_file=/var/lib/jenkins/.ssh/id_rsa' >> /etc/ansible/hosts
+            echo ' ansible_user=jenkins ansible_ssh_private_key_file=/var/lib/jenkins/.ssh/id_rsa' >> /etc/ansible/hosts
             echo '\n[prod]' >> /etc/ansible/hosts
             terraform output -raw  nat_ip__vm_prod >> /etc/ansible/hosts
-            echo ' ansible_user=root ansible_ssh_private_key_file=/var/lib/jenkins/.ssh/id_rsa' >> /etc/ansible/hosts
+            echo ' ansible_user=jenkins ansible_ssh_private_key_file=/var/lib/jenkins/.ssh/id_rsa' >> /etc/ansible/hosts
             echo '\n' >> /etc/ansible/hosts
             """
         }

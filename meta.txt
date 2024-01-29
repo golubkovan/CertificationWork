@@ -1,7 +1,7 @@
 #cloud-config
 ssh_pwauth: no
 users:
-  - name: root
+  - name: jenkins
     groups: sudo
     shell: /bin/bash
     sudo: 'ALL=(ALL) NOPASSWD:ALL'
