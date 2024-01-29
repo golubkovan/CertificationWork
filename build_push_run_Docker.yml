@@ -3,21 +3,25 @@
   gather_facts: no
   tasks:
     - name: Ensure docker.io package present
+      become: yes
       apt:
         name: docker.io
         state: present
 
     - name: create build directory
+      become: yes
       file:
         path: /tmp/buildDoker
         state: directory
 
     - name: copy Dockerfile
+      become: yes
       copy:
         src: ./Dockerfile
         dest: /tmp/buildDoker/Dockerfile
 
     - name: build container image
+      become: yes
       docker_image:
         name: tomcat1:v1
         source: build
@@ -26,11 +30,13 @@
         state: present
 
     - name: Login DockerHub
+      become: yes
       docker_login:
         username: agolubkov
         password: dckr_pat_l9y81ahvdQ90YWqYCj4LZv-zLkA
 
     - name: Tag and push to docker hub
+      become: yes
       docker_image:
         name: tomcat1:v1
         repository: agolubkov/tomcat1:v1
@@ -41,16 +47,19 @@
   gather_facts: no
   tasks:
     - name: Ensure docker.io package present
+      become: yes
       apt:
         name: docker.io
         state: present
 
     - name: Pull Docker image
+      become: yes
       docker_image:
         name: agolubkov/tomcat1:v1
         source: pull
 
     - name: RunDockerContainer
+      become: yes
       docker_container:
         name: tomcat1
         image: agolubkov/tomcat1:v1

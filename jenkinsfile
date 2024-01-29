@@ -4,11 +4,13 @@ pipeline {
 
     stage('Terraform init') {
         steps {
+            echo "terraform init" 
             sh 'terraform init'
         }
     }
     stage('Terraform apply') {
         steps {
+            echo "terraform apply" 
             sh 'terraform apply --auto-approve'
             }
     }
@@ -16,6 +18,7 @@ pipeline {
 
     stage('Filling in the file host for ansible'){
         steps {
+            echo "Filling in the file host for ansible" 
             sh """
             echo '[build]' > /etc/ansible/hosts
             terraform output -raw nat_ip_vm_build >> /etc/ansible/hosts
