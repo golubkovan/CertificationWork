@@ -1,0 +1,67 @@
+---
+- hosts: build
+  gather_facts: no
+  tasks:
+    - name: Ensure docker.io package present
+      apt:
+        name: docker.io
+        state: present
+
+    - name: create build directory
+      file:
+        path: /tmp/buildDoker
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: copy Dockerfile
+      copy:
+        src: ./Dockerfile
+        dest: /tmp/buildDoker/Dockerfile
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: build container image
+      docker_image:
+        name: tomcat1:v1
+        source: build
+        build:
+          path: /tmp/buildDoker
+        state: present
+
+    - name: Login DockerHub
+      docker_login:
+        username: agolubkov
+        password: dckr_pat_l9y81ahvdQ90YWqYCj4LZv-zLkA
+
+    - name: Tag and push to docker hub
+      docker_image:
+        name: tomcat1:v1
+        repository: agolubkov/tomcat1:v1
+        push: yes
+        source: local
+
+- hosts: prod
+  gather_facts: no
+  tasks:
+    - name: Ensure docker.io package present
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Pull Docker image
+      docker_image:
+        name: agolubkov/tomcat1:v1
+        source: pull
+
+    - name: RunDockerContainer
+      docker_container:
+        name: tomcat1
+        image: agolubkov/tomcat1:v1
+        exposed_ports:
+          - 8080
+        ports:
+          - "8080:8080"
+        state: started
