@@ -23,9 +23,11 @@ pipeline {
             echo '[build]' > /etc/ansible/hosts
             terraform output -raw nat_ip_vm_build >> /etc/ansible/hosts
             echo ' ansible_user=jenkins ansible_ssh_private_key_file=/var/lib/jenkins/.ssh/id_rsa' >> /etc/ansible/hosts
+            ssh-keyscan -H terraform output -raw nat_ip_vm_build >> ~/.ssh/known_hosts
             echo '\n[prod]' >> /etc/ansible/hosts
             terraform output -raw  nat_ip__vm_prod >> /etc/ansible/hosts
             echo ' ansible_user=jenkins ansible_ssh_private_key_file=/var/lib/jenkins/.ssh/id_rsa' >> /etc/ansible/hosts
+            ssh-keyscan -H terraform output -raw nat_ip__vm_prod >> ~/.ssh/known_hosts
             echo '\n' >> /etc/ansible/hosts
             """
         }
