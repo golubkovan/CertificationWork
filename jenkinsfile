@@ -27,7 +27,9 @@ pipeline {
     }
 
     stage('ansible'){
-        sh 'sudo -n ansible-playbook build_push_run_Docker.yml'
+        steps{
+            sh 'sudo -n ansible-playbook build_push_run_Docker.yml'
+        }
     }  
 
   }
