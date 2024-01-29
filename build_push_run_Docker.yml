@@ -1,6 +1,4 @@
 ---
-[defaults]
-host_key_checking = False
 - hosts: build
   gather_facts: no
   tasks:
