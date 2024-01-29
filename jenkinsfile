@@ -24,6 +24,10 @@ pipeline {
             echo '\n' >> /etc/ansible/hosts
             """
         }
+    }
+
+    stage('ansible'){
+        sh 'sudo -n ansible-playbook build_push_run_Docker.yml'
     }  
 
   }
