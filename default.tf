@@ -13,7 +13,6 @@ locals {
 }
 
 provider "yandex" {
-  service_account_key_file = "/home/agolubkov/authorized_key.json"
   cloud_id                 = local.cloud_id
   folder_id                = local.folder_id
   zone                     = "ru-central1-a"
