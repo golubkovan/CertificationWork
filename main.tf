@@ -22,6 +22,7 @@ resource "yandex_compute_instance" "build-vm" {
   }
 }
 
+
 #----------PROD VM-------------#
 resource "yandex_compute_instance" "prod-vm" {
   name = "prod-vm"
