@@ -20,7 +20,20 @@ resource "yandex_compute_instance" "build-vm" {
   metadata = {
     user-data = "${file("./meta.txt")}"
   }
+
+connection {
+    type     = "ssh"
+    user     = "jenkins"
+    private_key = file("~/.ssh/id_rsa")
+    host = yandex_compute_instance.build-vm.network_interface.0.nat_ip_address
+  }
+provisioner "remote-exec" {
+    inline = [
+      "sudo apt update", 
+    ]
+  }
 }
+
 
 
 #----------PROD VM-------------#
@@ -44,6 +57,17 @@ resource "yandex_compute_instance" "prod-vm" {
   }
   metadata = {
     user-data = "${file("./meta.txt")}"
+  }
+connection {
+    type     = "ssh"
+    user     = "jenkins"
+    private_key = file("~/.ssh/id_rsa")
+    host = yandex_compute_instance.prod-vm.network_interface.0.nat_ip_address
+  }
+provisioner "remote-exec" {
+    inline = [
+      "sudo apt update", 
+    ]
   }
 }
 
