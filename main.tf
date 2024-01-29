@@ -18,7 +18,7 @@ resource "yandex_compute_instance" "build-vm" {
     nat = true # автоматически установить динамический ip
   }
   metadata = {
-    user-data = "${file("/var/lib/jenkins/workspace/YandexCloudDockerTomcatBoxfuse/meta.txt")}"
+    user-data = "${file("./meta.txt")}"
   }
 }
 
@@ -42,6 +42,6 @@ resource "yandex_compute_instance" "prod-vm" {
     nat = true # автоматически установить динамический ip
   }
   metadata = {
-    user-data = "${file("/var/lib/jenkins/workspace/YandexCloudDockerTomcatBoxfuse/meta.txt")}"
+    user-data = "${file("./meta.txt")}"
   }
 }
