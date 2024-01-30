@@ -42,6 +42,14 @@ pipeline {
         }
     }
 
+    stage('add instans ip to known_hosts'){
+        steps{
+            echo "add instans ip to known_hosts" 
+            sh "ssh-keyscan -H  $(terraform output -raw nat_ip_vm_build) >> ~/.ssh/known_hosts"
+            sh "ssh-keyscan -H  $(terraform output -raw nat_ip_vm_prod) >> ~/.ssh/known_hosts"
+        }
+    }
+
     stage('ansible'){
         steps{
             sh 'ansible-playbook build_push_run_Docker.yml'
