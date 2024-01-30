@@ -6,6 +6,6 @@ users:
     shell: /bin/bash
     sudo: 'ALL=(ALL) NOPASSWD:ALL'
     ssh-authorized-keys:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCmzDwhT3UmQKezJ8DiZPNn0OXsBynzJRLkPqR4pdgA+jhez5xd7iav4JZXtXoS6y8IG1jzVp03VlTs3zRMCcspP05fq5wqA/FeIYlGS7B38oZT6F7I0GVWeVAfH/4iA6Mmzc2mD6WX9gp6b4PxkVp2l/fceeVL0UwTEuzWiGlE+ztlRr3FN+S31/VPpS7ux1WR2I0RMa8ppdtcaNwa4ZN2f427843XEjY1WiQ3PQN1AS8ANAUKYh94cHR5zpytTdcXtpuMjk/hvFi+egg4bGgjW9Or7W2dpUipDZfXoV1/JnIMIB1ypKsamRg5EUSixKah5dRpCf1En0mXjtJLt2+Z/43KT74O+Y0mmTuMR/2cOA20TRlfUpN6pBFZtco+rj5DbCPnhxGAC8C/VhWEVBO9x8E+IXVEbFYbPZWYPQpGiDwiMlQ6WuXCzZPdioF1IeJC8BQzbgOCSbNPZxYaMq/Hm4SXe11NXCsiWr2naJ6iWBwPK3kgXCojQnKPOOQIg5U= jenkins@jenkins
+        - {id_rsa}
 
       
