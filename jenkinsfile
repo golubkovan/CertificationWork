@@ -66,7 +66,7 @@ pipeline {
         steps{
                 script {
                     def output = sh(script: "terraform output -raw nat_ip_vm_prod", returnStdout: true)
-                    echo "Output: ${output}"
+                    echo "Ссылка на сайт http://${output}:8080/hello-1.0"
                 }
             }
     }
