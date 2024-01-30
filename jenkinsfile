@@ -10,6 +10,12 @@ pipeline {
         }
     }
 
+    stage('Gen id_rsa'){
+        steps{
+            sh 'ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa_box'
+        }
+    }
+
 
     stage('Terraform init') {
         steps {
