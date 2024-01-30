@@ -75,6 +75,6 @@ provisioner "remote-exec" {
 output "nat_ip_vm_build" {
   value = yandex_compute_instance.build-vm.network_interface.0.nat_ip_address
 }
-output "nat_ip__vm_prod" {
+output "nat_ip_vm_prod" {
   value = yandex_compute_instance.prod-vm.network_interface.0.nat_ip_address
 }
