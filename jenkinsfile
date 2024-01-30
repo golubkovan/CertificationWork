@@ -54,7 +54,10 @@ pipeline {
         steps{
             sh 'ansible-playbook build_push_run_Docker.yml'
         }
-    }  
+    } 
+    stage('delete build instans'){
+        sh 'yc compute instance delete $(terraform output -raw vm_build_id)'
+    }
 
   }
 }
