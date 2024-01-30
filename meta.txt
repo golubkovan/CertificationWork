@@ -6,6 +6,6 @@ users:
     shell: /bin/bash
     sudo: 'ALL=(ALL) NOPASSWD:ALL'
     ssh-authorized-keys:
-        - {id_rsa}
+        - id_rsa
 
       

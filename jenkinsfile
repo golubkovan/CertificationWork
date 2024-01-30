@@ -13,7 +13,7 @@ pipeline {
     stage('Gen id_rsa'){
         steps{
             sh 'ssh-keygen -y -t rsa -N "" -f ~/.ssh/id_rsa_box'
-            sh 'sed -i "s/{id_rsa}/$(cat /var/lib/jenkins/.ssh/id_rsa_box.pub)/g" meta.txt'
+            sh 'sed -i "s|id_rsa|$(cat /var/lib/jenkins/.ssh/id_rsa_box.pub)|g" meta.txt'
         }
     }
 
