@@ -7,15 +7,10 @@ terraform {
   required_version = ">= 0.13"
 }
 
-locals {
-  folder_id = "b1gs0pm6ll8cf737ur0d"
-  cloud_id = "b1gn49oi728vfl0b0e11"
-}
-
 provider "yandex" {
   token = "y0_AgAAAABzYXjAAATuwQAAAAD47oXuFmm1rQ_gSuqnYoQW9AFqp3V1ByI"
-  cloud_id                 = local.cloud_id
-  folder_id                = local.folder_id
+  cloud_id                 = "$cloud_id"
+  folder_id                = "$folder_id"
   zone                     = "ru-central1-a"
 }
 
