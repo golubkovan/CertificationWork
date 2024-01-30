@@ -24,7 +24,7 @@ resource "yandex_compute_instance" "build-vm" {
 connection {
     type     = "ssh"
     user     = "jenkins"
-    private_key = file("~/.ssh/id_rsa")
+    private_key = file("~/.ssh/id_rsa_box")
     host = yandex_compute_instance.build-vm.network_interface.0.nat_ip_address
   }
 provisioner "remote-exec" {
@@ -61,7 +61,7 @@ resource "yandex_compute_instance" "prod-vm" {
 connection {
     type     = "ssh"
     user     = "jenkins"
-    private_key = file("~/.ssh/id_rsa")
+    private_key = file("~/.ssh/id_rsa_box")
     host = yandex_compute_instance.prod-vm.network_interface.0.nat_ip_address
   }
 provisioner "remote-exec" {
