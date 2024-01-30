@@ -57,7 +57,9 @@ pipeline {
     } 
     stage('delete build instans'){
         steps{
-            sh 'yc compute instance delete "$(terraform output -raw vm_build_id)"'
+            timeout(time: 180, unit: 'SECONDS') {
+                sh 'yc compute instance delete "$(terraform output -raw vm_build_id)"'
+            }
         }
     }
 
