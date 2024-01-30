@@ -64,7 +64,7 @@ pipeline {
     }
     stage('link to site'){
         steps{
-            echo "http://'$(terraform output -raw nat_ip_vm_prod)':8080/hello-1.0/"
+            echo 'http://"'$(terraform output -raw nat_ip_vm_prod)'":8080/hello-1.0/'
         }
     }
 
