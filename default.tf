@@ -16,7 +16,7 @@ provider "yandex" {
 
 resource "yandex_container_registry" "agolubkovreg" {
   name = "agolubkovreg"
-  folder_id = local.folder_id
+  folder_id = "{folder_id}"
   labels = {
     my-label = "agolubkovreg1"
   }
