@@ -64,8 +64,11 @@ pipeline {
     }*/
     stage('link to site'){
         steps{
-            echo 'http://'terraform output -raw nat_ip_vm_prod':8080/hello-1.0/'
-        }
+                script {
+                    def output = sh(script: "terraform output -raw nat_ip_vm_prod", returnStdout: true)
+                    echo "Output: ${output}"
+                }
+            }
     }
 
   }
