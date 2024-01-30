@@ -55,13 +55,13 @@ pipeline {
             sh 'ansible-playbook build_push_run_Docker.yml'
         }
     } 
-    stage('delete build instans'){
+/*    stage('delete build instans'){
         steps{
             timeout(time: 180, unit: 'SECONDS') {
                 sh '/var/lib/jenkins/yandex-cloud/bin/yc compute instance delete "$(terraform output -raw vm_build_id)"'
             }
         }
-    }
+    }*/
     stage('link to site'){
         steps{
             echo 'http://""$(terraform output -raw nat_ip_vm_prod)"":8080/hello-1.0/'
