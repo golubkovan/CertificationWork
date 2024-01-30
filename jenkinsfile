@@ -4,9 +4,9 @@ pipeline {
 
     stage('setting YC variables default.tf'){
         steps{
-            sh 'sed -i "s/\$token/$(\/var\/lib\/jenkins\/yandex-cloud\/bin\/yc config get token)/g" default.tf'
-            sh 'sed -i "s/\$cloud_id/$(\/var\/lib\/jenkins\/yandex-cloud\/bin\/yc config get cloud-id)/g" default.tf'
-            sh 'sed -i "s/\$folder_id/$(\/var\/lib\/jenkins\/yandex-cloud\/bin\/yc config get folder-id)/g" default.tf'
+            sh 'sed -i "s/\$token/$(/var/lib/jenkins/yandex-cloud/bin/yc config get token)/g" default.tf'
+            sh 'sed -i "s/\$cloud_id/$(/var/lib/jenkins/yandex-cloud/bin/yc config get cloud-id)/g" default.tf'
+            sh 'sed -i "s/\$folder_id/$(/var/lib/jenkins/yandex-cloud/bin/yc config get folder-id)/g" default.tf'
         }
     }
 
