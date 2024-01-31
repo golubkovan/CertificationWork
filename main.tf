@@ -3,8 +3,8 @@ resource "yandex_compute_instance" "build-vm" {
   name = "build-vm"
   allow_stopping_for_update = true
   resources {
-    cores  = 2
-    memory = 2
+    cores  = 4
+    memory = 8
   }
 
   boot_disk {
