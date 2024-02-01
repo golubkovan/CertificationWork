@@ -1,41 +1,64 @@
 Сертификационное задание
 Мануал для запуска
-1. sudo su
-apt update
-apt install unzip
+1.#  sudo su
+# apt update
+# apt install unzip
 2.-----------------------Установка jenkins--------------------
- sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+ # sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+# echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
-sudo apt-get update
-sudo apt-get install jenkins
+# sudo apt-get update
+# sudo apt-get install jenkins
 
 3. --------------------------Установка java----------------------
-sudo apt update
-sudo apt install fontconfig openjdk-17-jre
-java -version
+# sudo apt update
+# sudo apt install fontconfig openjdk-17-jre
+# java -version
 4. --------------------------Запуск jenkins----------------------
-sudo systemctl enable jenkins
-sudo systemctl start jenkins
-sudo systemctl status jenkins
-5. adduser jenkins root
+# sudo systemctl enable jenkins
+# sudo systemctl start jenkins
+# sudo systemctl status jenkins
+#  adduser jenkins root
 6. -------------------------Установка ansible--------------------
-UBUNTU_CODENAME=jammy
-wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | sudo gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/ansible.list
-sudo apt update && sudo apt install ansible
+# UBUNTU_CODENAME=jammy
+# wget -O- "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | sudo gpg --dearmour -o /usr/share/keyrings/ansible-archive-keyring.gpg
+# echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/ansible.list
+# sudo apt update && sudo apt install ansible
 7. -------------------------Установка terraform-----------------
-wget https://hashicorp-releases.yandexcloud.net/terraform/1.7.1/terraform_1.7.1_linux_amd64.zip
-unzip terraform_1.7.1_linux_amd64.zip
-mv terraform /bin/
+# wget https://hashicorp-releases.yandexcloud.net/terraform/1.7.1/terraform_1.7.1_linux_amd64.zip
+# unzip terraform_1.7.1_linux_amd64.zip
+# mv terraform /bin/
+# mv ~/.terraformrc ~/.terraformrc.old
+# nano ~/.terraformrc
+
+provider_installation {
+  network_mirror {
+    url = "https://terraform-mirror.yandexcloud.net/"
+    include = ["registry.terraform.io/*/*"]
+  }
+  direct {
+    exclude = ["registry.terraform.io/*/*"]
+  }
+}
+
 8. ----------------------------Настройка YC---------------------
-su  jenkins
-cd ~
-curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+# su  jenkins
+# cd ~
+# curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 пройти по ссылке https://oauth.yandex.ru/authorize?response_type=token&client_id=1a6990aa636648e9b2ef855fa7bec2fb для получения токена
-~/yandex-cloud/bin/yc init
-yc config list
+# ~/yandex-cloud/bin/yc init
+# yc config list
 9. Настроить jenkins
-    Добавить tools terraform
+    Добавить tools terraform 
+      Install directory - /bin/
+    Добавить tools ansible
+      Path to ansible executables directory - /usr/bin/
+10. создать предварительно id_rsa для загрузки в создаваемые инстансы
+# ssh-keygen -t rsa -N "" -f /var/lib/jenkins/.ssh/id_rsa_box <<<y
+11. Создвать item - pipeline 
+  Definition - pipeline script from SCM
+  SCM - Git
+  Repository URL - https://github.com/golubkovan/CertificationWork.git
+  Branch Specifier - */main
